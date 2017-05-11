@@ -14,5 +14,4 @@ export default class SpocLearning extends Component {
     );
   }
 }
-
 AppRegistry.registerComponent('SpocLearning', () => SpocLearning);

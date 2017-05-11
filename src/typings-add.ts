@@ -11,3 +11,6 @@ declare module 'react-native-vector-icons/FontAwesome' {
 declare module 'react-native-vector-icons/MaterialIcons' {
     export default class Icon extends React.Component<IconProps, {}> {}
 }
+
+
+
