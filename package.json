@@ -7,11 +7,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/pubsub-js": "^1.5.17",
     "@types/react": "^15.0.23",
-    "@types/react-native": "^0.43.7",
+    "@types/react-native": "^0.44.1",
     "@types/react-navigation": "^1.0.0",
+    "pubsub-js": "^1.5.7",
     "react": "^16.0.0-alpha.6",
-    "react-native": "^0.43.4",
+    "react-native": "^0.44.0",
+    "react-native-pathjs-charts": "0.0.28",
     "react-native-vector-icons": "^4.1.0",
     "react-navigation": "^1.0.0-beta.9"
   },

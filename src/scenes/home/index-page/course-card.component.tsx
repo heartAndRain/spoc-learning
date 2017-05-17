@@ -58,20 +58,22 @@ export default class CourseCard extends React.Component<PropsDefine, {}> {
 
 const styles = StyleSheet.create({
     card: {
+        width: 320,
         height: 260,
         padding: 10,
-        marginBottom: 20,
+        // marginBottom: 20,
         elevation: 3,
-        borderWidth: 3,
+        borderWidth: 0,
         borderColor: 'transparent',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        borderRadius: 2
     },
     header: {
         height: 80,
         flexDirection: 'row'
     },
     content: {
-        flex: 1,
+        height: 150,
         backgroundColor: '#eee',
         marginTop: 10,
         padding: 10

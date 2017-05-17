@@ -1,7 +1,9 @@
 import * as React from 'react'
+import * as PubSub from 'pubsub-js'
 import {
     View,
     ViewStyle,
+    TextStyle,
     ViewPagerAndroid,
     Text,
     Dimensions,
@@ -19,6 +21,7 @@ import {Tab} from './tab.component'
 interface PropsDefine {
     headerStyle?: ViewStyle
     itemStyle?: 'default' | 'icon'
+    itemTextStyle?: TextStyle
 }
 interface StateDefine {
     // TabHeader的 active line 的 坐标信息
@@ -30,6 +33,11 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
         itemStyle: 'default'
     }
 
+    // 设置Contect的类型，React让强制设置
+    static childContextTypes = {
+        tabRenderIndex: React.PropTypes.number
+    }
+
     private winHeight = Dimensions.get('window').height
     private winWidth = Dimensions.get('window').width
 
@@ -38,6 +46,7 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
 
     // viewpager instance
     private viewPager: ViewPagerAndroidStatic
+
 
     constructor(props: PropsDefine) {
         super(props)
@@ -69,6 +78,12 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
         }).start()
     }
 
+    handlePageSelected = (event: NativeSyntheticEvent<ViewPagerAndroidOnPageScrollEventData>) => {
+        const {position} = event.nativeEvent
+
+        //PubSub.publish('TAB_CHANGE', position)
+    }
+
     handlePageStateChanged = (state: 'Idle' | 'Dragging' | 'Settling') => {
         // 坑！此处打印出的是小写
         // console.warn(state)
@@ -79,10 +94,12 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
     }
 
     render() {
+        console.warn('tab render')
         return (
             <View style={{height: this.winHeight}}>
                 <TabHeader
                     itemStyle={this.props.itemStyle}
+                    itemTextStyle={this.props.itemTextStyle}
                     style={[styles.headerStyle, this.props.headerStyle]}
                     tabNames={this.getTabNames()}
                     activeLineLeft={this.state.activeLineX}
@@ -92,10 +109,16 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
                     ref={(instance: any) => this.viewPager = instance}
                     style={styles.contentStyle}
                     onPageScroll={this.handlePageScroll}
+                    onPageSelected={this.handlePageSelected}
                     onPageScrollStateChanged={this.handlePageStateChanged}
                 >
                     {
-                        (this.props.children as Array<Tab>).map((tab) => tab.props.children)
+                       // 为每一个Tab组件传入index
+                       React.Children.map(this.props.children, (Tab, index) => {
+                           return React.cloneElement(Tab as React.ReactElement<any>, {
+                                    tabIndex: index
+                               })
+                       })
                     }
                 </ViewPagerAndroid>
             </View>
@@ -105,7 +128,7 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
 
 const styles = StyleSheet.create({
     headerStyle: {
-        elevation: 5
+        elevation: 0
     },
     contentStyle: {
         flex: 1
@@ -113,3 +136,4 @@ const styles = StyleSheet.create({
 })
 
 export {Tab} from './tab.component'
+export {TabLazyLoad} from './tab-lazyload.decorator'

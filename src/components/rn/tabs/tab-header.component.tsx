@@ -3,6 +3,7 @@ import {
     View,
     ViewStyle,
     Text,
+    TextStyle,
     TouchableNativeFeedback,
     StyleSheet,
     Dimensions,
@@ -19,6 +20,7 @@ interface PropsDefine {
     tabNames: Array<HeaderItem>
     style?: ViewStyle
     itemStyle?: 'default' | 'icon'
+    itemTextStyle?: TextStyle
     /** active线的坐标信息 */
     activeLineLeft?: Animated.Value
     onSelected?: (index: number) => void
@@ -45,7 +47,7 @@ export default class TabHeader extends React.Component<PropsDefine,StateDefine> 
                             <TouchableNativeFeedback onPress={() => {this.props.onSelected && this.props.onSelected(index)}}>
                                 <View style={styles.item}>
                                     {
-                                        this.props.itemStyle === 'default' ? <Text>{tabItem.text}</Text> : tabItem.icon
+                                        this.props.itemStyle === 'default' ? <Text style={this.props.itemTextStyle}>{tabItem.text}</Text> : tabItem.icon
                                     }
                                 </View>
                             </TouchableNativeFeedback>

@@ -29,6 +29,10 @@ class Tabs extends React.Component {
                 duration: 0
             }).start();
         };
+        this.handlePageSelected = (event) => {
+            const { position } = event.nativeEvent;
+            //PubSub.publish('TAB_CHANGE', position)
+        };
         this.handlePageStateChanged = (state) => {
             // 坑！此处打印出的是小写
             // console.warn(state)
@@ -42,18 +46,29 @@ class Tabs extends React.Component {
         this.pageTotal = this.props.children.length;
     }
     render() {
+        console.warn('tab render');
         return (React.createElement(react_native_1.View, { style: { height: this.winHeight } },
-            React.createElement(tab_header_component_1.default, { itemStyle: this.props.itemStyle, style: [styles.headerStyle, this.props.headerStyle], tabNames: this.getTabNames(), activeLineLeft: this.state.activeLineX, onSelected: this.handleSelectedItem }),
-            React.createElement(react_native_1.ViewPagerAndroid, { ref: (instance) => this.viewPager = instance, style: styles.contentStyle, onPageScroll: this.handlePageScroll, onPageScrollStateChanged: this.handlePageStateChanged }, this.props.children.map((tab) => tab.props.children))));
+            React.createElement(tab_header_component_1.default, { itemStyle: this.props.itemStyle, itemTextStyle: this.props.itemTextStyle, style: [styles.headerStyle, this.props.headerStyle], tabNames: this.getTabNames(), activeLineLeft: this.state.activeLineX, onSelected: this.handleSelectedItem }),
+            React.createElement(react_native_1.ViewPagerAndroid, { ref: (instance) => this.viewPager = instance, style: styles.contentStyle, onPageScroll: this.handlePageScroll, onPageSelected: this.handlePageSelected, onPageScrollStateChanged: this.handlePageStateChanged }, 
+            // 为每一个Tab组件传入index
+            React.Children.map(this.props.children, (Tab, index) => {
+                return React.cloneElement(Tab, {
+                    tabIndex: index
+                });
+            }))));
     }
 }
 Tabs.defaultProps = {
     itemStyle: 'default'
 };
+// 设置Contect的类型，React让强制设置
+Tabs.childContextTypes = {
+    tabRenderIndex: React.PropTypes.number
+};
 exports.Tabs = Tabs;
 const styles = react_native_1.StyleSheet.create({
     headerStyle: {
-        elevation: 5
+        elevation: 0
     },
     contentStyle: {
         flex: 1
@@ -61,3 +76,5 @@ const styles = react_native_1.StyleSheet.create({
 });
 var tab_component_1 = require("./tab.component");
 exports.Tab = tab_component_1.Tab;
+var tab_lazyload_decorator_1 = require("./tab-lazyload.decorator");
+exports.TabLazyLoad = tab_lazyload_decorator_1.TabLazyLoad;
