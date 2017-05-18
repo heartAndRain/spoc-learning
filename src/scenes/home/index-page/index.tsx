@@ -40,7 +40,8 @@ export default class IndexPage extends React.Component<PropsDefine, {}> {
     render() {
         return (
                 <FlatList
-                    style={{alignItems: 'center'}}
+                    contentContainerStyle={{alignItems: 'center'}}
+                    
                     showsVerticalScrollIndicator={false}
                     data={[{text: 'hh'}, {text: 'bb'}, {text: 'vvv'}, {text: 'vvv'}, {text: 'vvv'}]}
                     renderItem={({item}) =>

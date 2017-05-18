@@ -26,7 +26,7 @@ export class Tab extends React.Component<PropsDefine, StateDefine> {
     }
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 {this.props.children}
             </View>
         )

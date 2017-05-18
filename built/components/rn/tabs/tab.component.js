@@ -9,7 +9,7 @@ class Tab extends React.Component {
         };
     }
     render() {
-        return (React.createElement(react_native_1.View, null, this.props.children));
+        return (React.createElement(react_native_1.View, { style: { flex: 1 } }, this.props.children));
     }
 }
 Tab.childContextTypes = {

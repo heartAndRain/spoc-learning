@@ -51,11 +51,12 @@ class Tabs extends React.Component {
             React.createElement(tab_header_component_1.default, { itemStyle: this.props.itemStyle, itemTextStyle: this.props.itemTextStyle, style: [styles.headerStyle, this.props.headerStyle], tabNames: this.getTabNames(), activeLineLeft: this.state.activeLineX, onSelected: this.handleSelectedItem }),
             React.createElement(react_native_1.ViewPagerAndroid, { ref: (instance) => this.viewPager = instance, style: styles.contentStyle, onPageScroll: this.handlePageScroll, onPageSelected: this.handlePageSelected, onPageScrollStateChanged: this.handlePageStateChanged }, 
             // 为每一个Tab组件传入index
-            React.Children.map(this.props.children, (Tab, index) => {
-                return React.cloneElement(Tab, {
-                    tabIndex: index
-                });
-            }))));
+            /*React.Children.map(this.props.children, (Tab, index) => {
+                return React.cloneElement(Tab as React.ReactElement<any>, {
+                         tabIndex: index
+                    })
+            })*/
+            this.props.children.map((Tab) => React.createElement(react_native_1.View, null, Tab.props.children)))));
     }
 }
 Tabs.defaultProps = {

@@ -114,11 +114,12 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
                 >
                     {
                        // 为每一个Tab组件传入index
-                       React.Children.map(this.props.children, (Tab, index) => {
+                       /*React.Children.map(this.props.children, (Tab, index) => {
                            return React.cloneElement(Tab as React.ReactElement<any>, {
                                     tabIndex: index
                                })
-                       })
+                       })*/
+                       (this.props.children as Array<Tab>).map((Tab) => <View>{Tab.props.children}</View>)
                     }
                 </ViewPagerAndroid>
             </View>

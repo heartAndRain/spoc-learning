@@ -15,15 +15,25 @@ interface PropsDefine {
     data?: Array<any>
 }
 export default class CourseCard extends React.Component<PropsDefine, {}> {
+
+    static contextTypes = {
+        navigation: React.PropTypes.object
+    }
+
     static defaultProps: PropsDefine = {
         type: 'content',
         contentTitle: '居然没有题目',
         data: [{title: '介绍'}, {title: '基本数据类型'}, {title: '排序算法'}, {title: '查找算法'}]
     }
+
+    handleEnterCourseContent = (id: number) => {
+        this.context.navigation.navigate('CourseContentScene')
+    }
+
     renderContentList = () => {
         return this.props.data.map((item) => {
             return <View>
-                <TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={() =>  this.handleEnterCourseContent(111)}>
                     <View style={styles.contentItem}>
                         <Text style={{fontSize: 16}}>{item.title}</Text>
                         <Icon name="keyboard-arrow-right" size={20}></Icon> 
