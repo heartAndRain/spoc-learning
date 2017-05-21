@@ -12,7 +12,7 @@ interface PropsDefine {
     type?: 'week' | 'content'
     weekNum?: number
     contentTitle?: string
-    data?: Array<any>
+    data?: Array<Models.CourseItem>
 }
 export default class CourseCard extends React.Component<PropsDefine, {}> {
 
@@ -23,19 +23,19 @@ export default class CourseCard extends React.Component<PropsDefine, {}> {
     static defaultProps: PropsDefine = {
         type: 'content',
         contentTitle: '居然没有题目',
-        data: [{title: '介绍'}, {title: '基本数据类型'}, {title: '排序算法'}, {title: '查找算法'}]
+        data: []
     }
 
-    handleEnterCourseContent = (id: number) => {
+    handleEnterCourseContent = (id: string) => {
         this.context.navigation.navigate('CourseContentScene')
     }
 
     renderContentList = () => {
         return this.props.data.map((item) => {
             return <View>
-                <TouchableNativeFeedback onPress={() =>  this.handleEnterCourseContent(111)}>
+                <TouchableNativeFeedback onPress={() =>  this.handleEnterCourseContent(item.itemId)}>
                     <View style={styles.contentItem}>
-                        <Text style={{fontSize: 16}}>{item.title}</Text>
+                        <Text style={{fontSize: 16}}>{item.name}</Text>
                         <Icon name="keyboard-arrow-right" size={20}></Icon> 
                     </View>
                 </TouchableNativeFeedback>

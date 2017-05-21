@@ -56,7 +56,7 @@ class Tabs extends React.Component {
                          tabIndex: index
                     })
             })*/
-            this.props.children.map((Tab) => React.createElement(react_native_1.View, null, Tab.props.children)))));
+            this.props.children.map((Tab, index) => React.createElement(react_native_1.View, { key: index }, Tab.props.children)))));
     }
 }
 Tabs.defaultProps = {

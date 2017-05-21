@@ -6,14 +6,21 @@ import {
 } from 'react-native'
 import { Tabs, Tab } from  '../../components/rn/tabs'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import {Client} from '../../utils/gql-client'
 
 import CourseHomePage from './course-home'
 import CourseHomework from './course-homework'
 import CourseGradesPage from './course-grades'
 
+interface PropsDefine {
+    navigation?: any
+}
 
+interface StateDefine {
+    indexPageData?: any
+}
 
-export default class CourseScene extends React.Component<{}, {}> {
+export default class CourseScene extends React.Component<PropsDefine, StateDefine> {
     static navigationOptions: any = {
         title: '数据结构与算法分析',
         headerStyle: {
@@ -25,14 +32,51 @@ export default class CourseScene extends React.Component<{}, {}> {
         },
         headerTintColor: '#fff'
     }
+    constructor() {
+        super()
+
+        this.state = {
+            indexPageData: {
+                courseId: 0,
+                type: 0,
+                name: '',
+                episodes: []
+            }
+        }
+    }
+    componentDidMount() {
+        const {courseId} = this.props.navigation.state.params
+        Client.query(`
+                query CourseDetail($courseId: ID!) {
+                    course(id: $courseId) {
+                        courseId,
+                        name,
+                        type,
+                        episodes {
+                            type,
+                            name,
+                            itemList {
+                                itemId,
+                                name
+                            }
+                        }
+                    }
+                }
+        `, {
+            courseId
+        }).then((result: any) => {
+            this.setState({
+                indexPageData: result.course
+            })
+        }).catch(e => console.warn(e))
+    }
     render() {
-        console.warn('scene', (this.props as any).tabIndex)
         return (
             <View style={styles.container}>
                 <Tabs headerStyle={{backgroundColor: '#e84e40'}} itemTextStyle={{color: '#fff', fontWeight: 'bold'}}>
                         <Tab name="课程首页" icon={<Icon name={'home'} size={25} color={'#fff'}></Icon>}>
                             <View>
-                                <CourseHomePage courseName={'数据结构与算法分析'}></CourseHomePage>
+                                <CourseHomePage pageData={this.state.indexPageData}></CourseHomePage>
                             </View>
                         </Tab>
                         <Tab name="作业" icon={<Icon name={'library-books'} size={25} color={'#fff'}></Icon>}>

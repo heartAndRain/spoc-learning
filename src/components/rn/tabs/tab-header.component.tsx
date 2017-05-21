@@ -44,7 +44,7 @@ export default class TabHeader extends React.Component<PropsDefine,StateDefine> 
                 {
                     this.props.tabNames.map((tabItem, index) => {
                         return (
-                            <TouchableNativeFeedback onPress={() => {this.props.onSelected && this.props.onSelected(index)}}>
+                            <TouchableNativeFeedback key={tabItem.text} onPress={() => {this.props.onSelected && this.props.onSelected(index)}}>
                                 <View style={styles.item}>
                                     {
                                         this.props.itemStyle === 'default' ? <Text style={this.props.itemTextStyle}>{tabItem.text}</Text> : tabItem.icon

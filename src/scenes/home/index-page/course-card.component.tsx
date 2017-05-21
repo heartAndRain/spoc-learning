@@ -8,28 +8,32 @@ import {
     TouchableOpacity
 } from 'react-native'
 import Icon from '../../../components/rn/Icon'
+import {SourseType, getUrl} from '../../../utils/getUrl'
 
 interface PropsDefine {
     onPressEnterCourse?: (courseId: number) => void
+
+    itemData: Models.Course
 }
 export default class CourseCard extends React.Component<PropsDefine, {}> {
 
     handleOnPressEnterCourse = () => {
-        this.props.onPressEnterCourse && this.props.onPressEnterCourse(110)
+        this.props.onPressEnterCourse && this.props.onPressEnterCourse(this.props.itemData.courseId)
     }
     render() {
+        const {itemData} = this.props
         return (
             <TouchableNativeFeedback>
                 <View style={styles.card}>
                     <View style={styles.header}>
-                        <Image style={styles.cover} source={require('../../../../images/test.jpeg')}></Image>
+                        <Image style={styles.cover} source={{uri: getUrl(SourseType.Image, itemData.cover)}}></Image>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>数据结构与算法分析</Text>
+                            <Text style={styles.title}>{itemData.name}</Text>
                             <Text style={styles.school}>
-                                武汉理工大学
+                                {itemData.teacher.school}
                             </Text>
                             <Text style={styles.teacher}>
-                                胡燕
+                                {itemData.teacher.nickname}
                             </Text>
                         </View>
                         <View style={styles.menuContainer}>

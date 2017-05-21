@@ -119,7 +119,7 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
                                     tabIndex: index
                                })
                        })*/
-                       (this.props.children as Array<Tab>).map((Tab) => <View>{Tab.props.children}</View>)
+                       (this.props.children as Array<Tab>).map((Tab, index) => <View key={index}>{Tab.props.children}</View>)
                     }
                 </ViewPagerAndroid>
             </View>

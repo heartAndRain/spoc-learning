@@ -12,7 +12,7 @@ class TabHeader extends React.Component {
     render() {
         return (React.createElement(react_native_1.View, { style: [styles.container, this.props.style] },
             this.props.tabNames.map((tabItem, index) => {
-                return (React.createElement(react_native_1.TouchableNativeFeedback, { onPress: () => { this.props.onSelected && this.props.onSelected(index); } },
+                return (React.createElement(react_native_1.TouchableNativeFeedback, { key: tabItem.text, onPress: () => { this.props.onSelected && this.props.onSelected(index); } },
                     React.createElement(react_native_1.View, { style: styles.item }, this.props.itemStyle === 'default' ? React.createElement(react_native_1.Text, { style: this.props.itemTextStyle }, tabItem.text) : tabItem.icon)));
             }),
             React.createElement(react_native_1.Animated.View, { style: [styles.activeLine, {

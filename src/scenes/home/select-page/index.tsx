@@ -9,11 +9,11 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native'
-
+import {SourseType, getUrl} from '../../../utils/getUrl'
 import Icon from '../../../components/rn/Icon'
 
 interface PropsDefine {
-
+    categoryList: Array<Models.Category>
 }
 export default class SelectPage extends React.Component<PropsDefine, any> { 
 
@@ -22,62 +22,7 @@ export default class SelectPage extends React.Component<PropsDefine, any> {
     }
 
     private ITEM_HEIGHT = Dimensions.get('window').width * 9 / 16   // 16: 9
-
-    data: any[] = [
-        {
-            name: '哲学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '经济学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '法学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '教育学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '文学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '历史学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '理学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '工学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '农学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '医学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '军事学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '管理学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        },
-        {
-            name: '艺术学',
-            cover: 'http://oq39rralr.bkt.clouddn.com/image/zhexue.jpeg'
-        }
-    ]
-    renderItem = (info: {item: any, index: number}) => {
+    renderItem = (info: {item: Models.Category, index: number}) => {
 
         const {item, index} = info
         return (
@@ -85,7 +30,7 @@ export default class SelectPage extends React.Component<PropsDefine, any> {
                     this.context.navigation.navigate('SelectScene')
                 }}>
                 <View style={[styles.categoryItem, {height: this.ITEM_HEIGHT}]}>
-                    <Image resizeMode="cover" style={styles.itemImage} source={{uri: item.cover}}></Image>
+                    <Image resizeMode="cover" style={styles.itemImage} source={{uri: getUrl(SourseType.Image, item.cover)}}></Image>
                     <Text style={styles.itemText}>{item.name}</Text>
                 </View>
             </TouchableOpacity>
@@ -97,11 +42,16 @@ export default class SelectPage extends React.Component<PropsDefine, any> {
         )
     }
     render() {
+        const {categoryList} = this.props 
+        
+        if (!categoryList.length) {
+            return <View><Text>暂时没有学科目录</Text></View>
+        }
         return (
             <View style={styles.container}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={this.data}
+                    data={categoryList}
                     renderItem={this.renderItem}
                     ItemSeparatorComponent={this.renderSeperator}
                     ListFooterComponent={() => <View style={{height: 40}}></View>}

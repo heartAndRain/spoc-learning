@@ -34,18 +34,37 @@ class FooterCompnent extends React.Component<any, any> {
 }
 
 interface PropsDefine {
-    courseName?: string
+    pageData: {
+        /**
+         * 0 是周类型，1 是章类型
+         */
+        type: number,
+        name: string,
+        episodes: Array<Models.Episode>
+    }
 }
 
 export default class CourseHomePage extends React.Component<PropsDefine, {}> {
     static contextTypes = {
         tabIndex: React.PropTypes.number
     }
+    renderItem = ({item, index}: {item: Models.Episode, index: number}) => {
+        const {type, name} = this.props.pageData
+        return (
+            <CourseCard
+                type={type === 0 ? 'week' : 'content'}
+                weekNum={index + 1}
+                contentTitle={name}
+                data={item.itemList}
+            ></CourseCard>
+        )
+    }
     render() {
+        const {name, episodes} = this.props.pageData
         return (
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.courseName}>
-                    <Text style={styles.courseNameText}>{this.props.courseName}</Text>
+                    <Text style={styles.courseNameText}>{name}</Text>
                 </View>
                 <View style={styles.courseInfo}>
                     <TouchableNativeFeedback>
@@ -62,8 +81,8 @@ export default class CourseHomePage extends React.Component<PropsDefine, {}> {
                     </TouchableNativeFeedback>
                 </View>
                 <FlatList
-                    data={[{}, {}, {}, {}, {}]}
-                    renderItem={() => <CourseCard contentTitle={"第1章"}></CourseCard>}
+                    data={episodes}
+                    renderItem={this.renderItem}
                     ItemSeparatorComponent={SeparatorComponent}
                     ListFooterComponent={FooterCompnent}
                 >

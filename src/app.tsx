@@ -5,6 +5,8 @@ import CourseScene from './scenes/course'
 import CourseContentScene from './scenes/course/course-content'
 import SelectScene from './scenes/select'
 
+
+
 const App = StackNavigator({
   HomeScene: { screen: HomeScene },
   CourseScene: { screen: CourseScene },
