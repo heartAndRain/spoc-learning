@@ -33,7 +33,7 @@ export default class CourseCard extends React.Component<PropsDefine, {}> {
     renderContentList = () => {
         return this.props.data.map((item) => {
             return <View>
-                <TouchableNativeFeedback onPress={() =>  this.handleEnterCourseContent(item.itemId)}>
+                <TouchableNativeFeedback delayPressOut={50} onPressOut={() =>  this.handleEnterCourseContent(item.itemId)}>
                     <View style={styles.contentItem}>
                         <Text style={{fontSize: 16}}>{item.name}</Text>
                         <Icon name="keyboard-arrow-right" size={20}></Icon> 

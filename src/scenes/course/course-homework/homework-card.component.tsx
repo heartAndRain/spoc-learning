@@ -12,10 +12,18 @@ interface PropsDefine {
     
 }
 export default class HomeworkCard extends React.Component<PropsDefine, {}> {
+    static contextTypes = {
+        navigation: React.PropTypes.object
+    }
     render() {
         return (
             <View style={styles.container}>
-                <TouchableNativeFeedback>
+                <TouchableNativeFeedback
+                    delayPressOut={50}
+                    onPressOut={() => {
+                        this.context.navigation.navigate('HomeworkScene')
+                    }}
+                >
                     <View style={styles.header}>
                         <View style={styles.headerHomeworkInfo}>
                             <Text style={styles.headerHomeworkName}>数据结构与算法分析</Text>

@@ -11,6 +11,7 @@ import {Client} from '../../utils/gql-client'
 import CourseHomePage from './course-home'
 import CourseHomework from './course-homework'
 import CourseGradesPage from './course-grades'
+import CourseCommunicationPage from './course-communication'
 
 interface PropsDefine {
     navigation?: any
@@ -91,7 +92,7 @@ export default class CourseScene extends React.Component<PropsDefine, StateDefin
                         </Tab>
                         <Tab name="交流" icon={<Icon name={'person'} size={25} color={'#fff'}></Icon>}>
                             <View>
-                                <Text>个人</Text>
+                                <CourseCommunicationPage></CourseCommunicationPage>
                             </View>
                         </Tab>
                     </Tabs>
