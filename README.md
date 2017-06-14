@@ -20,7 +20,6 @@ cd到项目目录下，
 `tsc`
 
 启动Bundle服务器
-
 `npm start`
 
 使用Android Studio打开`/android`目录，编译运行
