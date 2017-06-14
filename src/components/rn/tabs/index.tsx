@@ -59,7 +59,7 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
 
     getTabNames = (): HeaderItem[] => {
         if (Object.prototype.toString.call(this.props.children) !== '[object Array]') {
-            console.warn('Tab children should be Tab')
+            console.log('Tab children should be Tab')
             return []
         }
         return (this.props.children as Array<Tab>).map((tab) => {
@@ -86,7 +86,7 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
 
     handlePageStateChanged = (state: 'Idle' | 'Dragging' | 'Settling') => {
         // 坑！此处打印出的是小写
-        // console.warn(state)
+        // console.log(state)
     }
 
     handleSelectedItem = (index: number) => {
@@ -94,7 +94,7 @@ export class Tabs extends React.Component<PropsDefine, StateDefine> {
     }
 
     render() {
-        console.warn('tab render')
+        console.log('tab render')
         return (
             <View style={{height: this.winHeight}}>
                 <TabHeader

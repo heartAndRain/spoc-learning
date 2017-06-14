@@ -1,4 +1,10 @@
 namespace Models{
+    export declare type loginUserInfo =  {
+        userId: number
+        username: string
+        role: string
+        stat: string
+    }
     export declare type User = {
         userId: number
         username: string
@@ -15,6 +21,7 @@ namespace Models{
         type: number,
         cover: string,
         teacher: User
+        episodes: Array<Episode>
     }
 
     export declare type Category = {
@@ -24,6 +31,7 @@ namespace Models{
     }
 
     export declare type Episode = {
+        episodeId: string
         type: number
         name: string,
         itemList: Array<CourseItem>
@@ -34,6 +42,36 @@ namespace Models{
         name: string
         introduce: string
         video: string
-        source: Array<any>
+        source: Array<Source>
+        homework: Array<Homework>
     }
+
+    export declare type Source = {
+        type: number
+        name: string
+        introduce: string
+        url: string
+    }
+
+    export declare type Homework =  {
+        hwId: string
+        type: number
+        name: string
+        deadline: string
+        score: number
+        pass: number
+        questions: Array<Question>
+    }
+
+    export declare type Question = {
+        title: string
+        options?: Array<SelectOption>
+    }
+
+    export declare type SelectOption = {
+        index: number
+        content: string
+    }
+
 }
+

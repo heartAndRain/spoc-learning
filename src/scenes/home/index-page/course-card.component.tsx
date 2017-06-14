@@ -12,7 +12,7 @@ import {SourseType, getUrl} from '../../../utils/getUrl'
 
 interface PropsDefine {
     onPressEnterCourse?: (courseId: number) => void
-
+    role?: string
     itemData: Models.Course
 }
 export default class CourseCard extends React.Component<PropsDefine, {}> {
@@ -21,7 +21,25 @@ export default class CourseCard extends React.Component<PropsDefine, {}> {
         this.props.onPressEnterCourse && this.props.onPressEnterCourse(this.props.itemData.courseId)
     }
     render() {
-        const {itemData} = this.props
+        const {itemData, role} = this.props
+        if (role === 'tea') {
+            return (
+                <TouchableNativeFeedback
+                    onPress={this.handleOnPressEnterCourse}
+                >
+                    <View style={{height: 100, padding: 16,flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff'}}>
+                        <Image style={{height: 70, width: 70, marginRight: 20}} source={{uri: getUrl(SourseType.Image, itemData.cover)}}></Image>
+                        <View style={{flex: 1,flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <View>
+                                <Text style={{fontSize: 18}}>{itemData.name}</Text>
+                                <Text style={{fontSize: 14}}>{+itemData.type === 0 ? '按周上课' : '按章上课'}</Text>
+                            </View>
+                            <Icon size={25} name={'keyboard-arrow-right'}></Icon>
+                        </View>
+                    </View>
+                </TouchableNativeFeedback>
+            )
+        }
         return (
             <TouchableNativeFeedback>
                 <View style={styles.card}>
@@ -66,7 +84,7 @@ const styles = StyleSheet.create({
         height: 260,
         padding: 10,
         // marginBottom: 20,
-        elevation: 3,
+        elevation: 8,
         borderWidth: 0,
         borderColor: 'transparent',
         backgroundColor: '#fff',
