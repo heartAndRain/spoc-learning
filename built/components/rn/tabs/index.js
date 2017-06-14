@@ -12,7 +12,7 @@ class Tabs extends React.Component {
         this.pageTotal = 0;
         this.getTabNames = () => {
             if (Object.prototype.toString.call(this.props.children) !== '[object Array]') {
-                console.warn('Tab children should be Tab');
+                console.log('Tab children should be Tab');
                 return [];
             }
             return this.props.children.map((tab) => {
@@ -35,7 +35,7 @@ class Tabs extends React.Component {
         };
         this.handlePageStateChanged = (state) => {
             // 坑！此处打印出的是小写
-            // console.warn(state)
+            // console.log(state)
         };
         this.handleSelectedItem = (index) => {
             this.viewPager.setPage(index);
@@ -46,7 +46,7 @@ class Tabs extends React.Component {
         this.pageTotal = this.props.children.length;
     }
     render() {
-        console.warn('tab render');
+        console.log('tab render');
         return (React.createElement(react_native_1.View, { style: { height: this.winHeight } },
             React.createElement(tab_header_component_1.default, { itemStyle: this.props.itemStyle, itemTextStyle: this.props.itemTextStyle, style: [styles.headerStyle, this.props.headerStyle], tabNames: this.getTabNames(), activeLineLeft: this.state.activeLineX, onSelected: this.handleSelectedItem }),
             React.createElement(react_native_1.ViewPagerAndroid, { ref: (instance) => this.viewPager = instance, style: styles.contentStyle, onPageScroll: this.handlePageScroll, onPageSelected: this.handlePageSelected, onPageScrollStateChanged: this.handlePageStateChanged }, 

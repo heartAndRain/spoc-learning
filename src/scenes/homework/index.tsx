@@ -7,18 +7,60 @@ import {
 } from 'react-native'
 import {SelectionCard} from './selection-card.component'
 import {AskCard} from './ask-card.component'
+import {Client} from '../../utils/gql-client'
 
-export default class HomeworkScene extends React.Component<any, any> {
-    static navigationOptions: any = {
-        title: '作业',
-        headerStyle: {
-            backgroundColor: '#e84e40',
-            elevation: 0
-        },
-        headerTitleStyle: {
-            color: '#fff'
-        },
-        headerTintColor: '#fff'
+interface PropsDefine {
+
+}
+interface StateDefine {
+    isFetching?: boolean,
+    isFailed?: boolean
+}
+export default class HomeworkScene extends React.Component<PropsDefine, StateDefine> {
+    constructor(props: PropsDefine) {
+        super(props)
+
+        this.state = {
+            isFetching: false,
+            isFailed: false
+        }
+    }
+    loadData = () => {
+        this.setState({
+            isFetching: true
+        })
+        Client.getInstance().query(`
+            {
+                course(id: 3001) {
+                    name,
+                    episodes {
+                        type,
+                        name,
+                        itemList {
+                            name,
+                            homework {
+                                hwId,
+                                name,
+                                score,
+                                pass,
+                                deadline,
+                                type
+                            }
+                        }
+                    }
+                }
+            }
+        `).then((result: any) => {
+            this.setState({
+                isFetching: false,
+            })
+        }).catch(e => {
+            console.log(e)
+            this.setState({
+                isFailed: true,
+                isFetching: false
+            })
+        })
     }
     renderFooter = () => {
         return (

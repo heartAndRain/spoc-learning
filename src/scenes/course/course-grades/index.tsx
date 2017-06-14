@@ -10,6 +10,7 @@ import {Bar} from 'react-native-pathjs-charts'
 interface PropsDefine {
 
 }
+
 export default class CourseGradesPage extends React.Component<PropsDefine, {}> {
     
     render() {
